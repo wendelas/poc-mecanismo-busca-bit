@@ -2,12 +2,12 @@ const {
     MongoClient
 } = require('mongodb');
 const natural = require('natural');
-const stopword = require('stopword');
+const stopword = require('stopwords-pt');
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 
-const MONGODB_URI = 'mongodb://localhost:27017/botCrawler';
-const DATABASE_NAME = 'botCrawler';
+const MONGODB_URI = 'mongodb://localhost:27017/ibbartemis';
+const DATABASE_NAME = 'ibbartemis';
 
 async function createInvertedIndex() {
     const client = new MongoClient(MONGODB_URI, {
@@ -18,8 +18,8 @@ async function createInvertedIndex() {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const resultsCollection = database.collection('results');
-        const indexCollection = database.collection('inverted_index');
+        const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const cursor = resultsCollection.find();
         await indexCollection.deleteMany({}); // Limpa o índice invertido antes de reconstruí-lo

@@ -16,6 +16,7 @@ async function createInvertedIndex() {
         const database = client.db(DATABASE_NAME);
         const indexCollection = database.collection('inverted_index');
         const sitesCollection = database.collection('results');
+        
 
         // Busca todos os documentos
         const sites = await sitesCollection.find().toArray();

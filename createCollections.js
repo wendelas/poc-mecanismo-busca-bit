@@ -16,9 +16,7 @@ async function createCollections() {
         // Inserção de documentos de exemplo na coleção 'urls'
         const urlsCollection = database.collection('urls');
         await urlsCollection.insertMany([
-            { url: 'http://bitconecta.com' },
-            { url: 'http://example.com' },
-            { url: 'http://another-example.com' }
+            { url: 'https://uol.com.br' }
         ]);
 
         console.log('Coleções criadas e dados de exemplo inseridos com sucesso.');

@@ -5,8 +5,8 @@ const stopword = require('stopword');
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 
-const MONGODB_URI = 'mongodb://localhost:27017/botCrawler';
-const DATABASE_NAME = 'botCrawler';
+const MONGODB_URI = 'mongodb://localhost:27017/ibbartemis';
+const DATABASE_NAME = 'ibbartemis';
 const PORT = 3000;
 
 const app = express();
@@ -19,7 +19,7 @@ async function searchOne(query) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const indexCollection = database.collection('inverted_index');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const tokens = tokenizer.tokenize(query.toLowerCase());
         const filteredTokens = stopword.removeStopwords(tokens).map(token => stemmer.stem(token));
@@ -121,7 +121,7 @@ async function search(query, author, fromDate, toDate) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const indexCollection = database.collection('inverted_index');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const tokens = tokenizer.tokenize(query.toLowerCase());
         const filteredTokens = stopword.removeStopwords(tokens).map(token => stemmer.stem(token));
@@ -187,7 +187,7 @@ async function searchPhraseOn(phrase) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const indexCollection = database.collection('inverted_index');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const tokens = tokenizer.tokenize(phrase.toLowerCase());
         const filteredTokens = stopword.removeStopwords(tokens).map(token => stemmer.stem(token));
@@ -258,7 +258,7 @@ async function searchPhrase(phrase) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const indexCollection = database.collection('inverted_index');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const tokens = tokenizer.tokenize(phrase.toLowerCase());
         const filteredTokens = stopword.removeStopwords(tokens).map(token => stemmer.stem(token));
@@ -347,7 +347,7 @@ async function searchPhraseD(phrase) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const indexCollection = database.collection('inverted_index');
+        const indexCollection = database.collection('ENGINE_SEARCH_INVERTED_INDEX');
 
         const tokens = phrase.split('+');
         const filteredTokens = tokens.map(token => stemmer.stem(token));
