@@ -1,22 +1,22 @@
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = 'mongodb://localhost:27017/botCrawler';
+const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
 
 async function createCollections() {
     const client = new MongoClient(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
     try {
         await client.connect();
-        const database = client.db('botCrawler');
+        const database = client.db('botCrawlerIndex');
 
         // Criação das coleções
         await database.createCollection('urls');
         await database.createCollection('results');
 
         // Inserção de documentos de exemplo na coleção 'urls'
-        const urlsCollection = database.collection('urls');
+        const urlsCollection = database.collection('listaUrlsIndexacao');
         await urlsCollection.insertMany([
-            { url: 'https://uol.com.br' }
+            { url: 'https://bitconecta.com.br' }
         ]);
 
         console.log('Coleções criadas e dados de exemplo inseridos com sucesso.');
