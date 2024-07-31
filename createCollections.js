@@ -10,11 +10,11 @@ async function createCollections() {
         const database = client.db('botCrawlerIndex');
 
         // Criação das coleções
-        await database.createCollection('urls');
-        await database.createCollection('results');
+        await database.createCollection('ENGINE_LIST_URL_INDEX');//lista de urls para indexacao
+        await database.createCollection('ENGINE_SEARCH_CRAWLER_DATASET');//resultado do crawler, dados armazenados: url com link internos e todas as palavras encontradas dentro do header, body e footer
 
         // Inserção de documentos de exemplo na coleção 'urls'
-        const urlsCollection = database.collection('listaUrlsIndexacao');
+        const urlsCollection = database.collection('ENGINE_LIST_URL_INDEX');
         await urlsCollection.insertMany([
             { url: 'https://bitconecta.com.br' }
         ]);
