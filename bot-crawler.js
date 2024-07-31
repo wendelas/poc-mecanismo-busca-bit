@@ -6,6 +6,8 @@ const urlModule = require('url');
 const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
 const DATABASE_NAME = 'botCrawlerIndex';
 const PORT = 3000;
+ const urlsCollection = database.collection('ENGINE_LIST_URL_INDEX');
+const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
 const app = express();
 
@@ -66,8 +68,8 @@ async function updateSites() {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const urlsCollection = database.collection('urls');
-        const resultsCollection = database.collection('results');
+        const urlsCollection = database.collection('ENGINE_LIST_URL_INDEX');
+        const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
         const sites = await urlsCollection.find().toArray();
 
@@ -111,7 +113,7 @@ async function updateInternalLinksForAllSites(limit = 0) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const resultsCollection = database.collection('results');
+        const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
         const sites = await resultsCollection.find().toArray();
 
@@ -153,7 +155,7 @@ async function updateInternalLinksForSpecificSite(siteUrl, limit = 0) {
     try {
         await client.connect();
         const database = client.db(DATABASE_NAME);
-        const resultsCollection = database.collection('results');
+        const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
         const site = await resultsCollection.findOne({ url: siteUrl });
 
