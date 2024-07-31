@@ -5,8 +5,8 @@ const stopword = require('stopword');
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 
-const MONGODB_URI = 'mongodb://localhost:27017/ibbartemis';
-const DATABASE_NAME = 'ibbartemis';
+const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
+const DATABASE_NAME = 'botCrawlerIndex';
 const PORT = 3000;
 
 const app = express();
