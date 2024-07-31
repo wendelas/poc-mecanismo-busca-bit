@@ -40,5 +40,5 @@ Para testar a POC vamos usar 3 arquivos, bot-crawler.js, createCollections.js, c
    - //https://localhost:3000/scan-internal-links
    - 
 6) Agora execute o createInvertedIndex.js, ele ira acessar o ENGINE_SEARCH_CRAWLER_DATASET e iniciar a indexação na collection ENGINE_SEARCH_INVERTED_INDEX
-7) Agora que já temos nosso index invertido iremos testar nosso mecanismo de busca executando nosso server.js 
+7) Agora que já temos nosso index invertido iremos testar nosso mecanismo de busca executando nosso server.js, agora pode testar sua busca https://localhost:3000/search?q=sua+frase+de+busca
    
