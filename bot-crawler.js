@@ -3,8 +3,8 @@ const { MongoClient } = require('mongodb');
 const puppeteer = require('puppeteer');
 const urlModule = require('url');
 
-const MONGODB_URI = 'mongodb://localhost:27017/botCrawler';
-const DATABASE_NAME = 'botCrawler';
+const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
+const DATABASE_NAME = 'botCrawlerIndex';
 const PORT = 3000;
 
 const app = express();
