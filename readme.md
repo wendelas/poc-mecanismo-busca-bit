@@ -1,4 +1,4 @@
-## Roteiro para Execução da Prova de Conceito (POC)
+## Roteiro para Execução da Prova de Conceito (POC) de uma engine de Busca
 
 ### Pré-requisitos
 
