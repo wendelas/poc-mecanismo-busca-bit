@@ -6,8 +6,8 @@ const stopword = require('stopwords-pt');
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
 
-const MONGODB_URI = 'mongodb://localhost:27017/ibbartemis';
-const DATABASE_NAME = 'ibbartemis';
+const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
+const DATABASE_NAME = 'botCrawlerIndex';
 
 async function createInvertedIndex() {
     const client = new MongoClient(MONGODB_URI, {
