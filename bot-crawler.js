@@ -49,17 +49,6 @@ async function fetchPageData(url, baseDomain) {
     }
 }
 
-async function fetchInternalLinks(urls, baseDomain, limit = 0) {
-    const internalLinksData = [];
-    for (let i = 0; i < urls.length; i++) {
-        if (limit > 0 && i >= limit) break;
-        const link = urls[i];
-        const linkData = await fetchPageData(link, baseDomain);
-        internalLinksData.push({ url: link, ...linkData });
-    }
-    return internalLinksData;
-}
-
 async function updateSites() {
     const client = new MongoClient(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -103,6 +92,26 @@ async function updateSites() {
     } finally {
         await client.close();
     }
+}
+
+app.get('/scan', async (req, res) => {
+    try {
+        await updateSites();
+        res.send('Varredura e salvamento concluídos.');
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+});
+
+async function fetchInternalLinks(urls, baseDomain, limit = 0) {
+    const internalLinksData = [];
+    for (let i = 0; i < urls.length; i++) {
+        if (limit > 0 && i >= limit) break;
+        const link = urls[i];
+        const linkData = await fetchPageData(link, baseDomain);
+        internalLinksData.push({ url: link, ...linkData });
+    }
+    return internalLinksData;
 }
 
 async function updateInternalLinksForAllSites(limit = 0) {
@@ -182,14 +191,7 @@ async function updateInternalLinksForSpecificSite(siteUrl, limit = 0) {
     }
 }
 
-app.get('/scan', async (req, res) => {
-    try {
-        await updateSites();
-        res.send('Varredura e salvamento concluídos.');
-    } catch (error) {
-        res.status(500).send({ error: error.message });
-    }
-});
+
 
 app.get('/scan-internal-links', async (req, res) => {
     const { url, limit } = req.query;

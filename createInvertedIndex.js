@@ -24,14 +24,14 @@ async function createInvertedIndex() {
         const cursor = resultsCollection.find();
         await indexCollection.deleteMany({}); // Limpa o índice invertido antes de reconstruí-lo
 
-        while (await cursor.hasNext()) {
-            const doc = await cursor.next();
-            const content = doc.content || '';
-            const tokens = tokenizer.tokenize(content.toLowerCase());
+        while (await cursor.hasNext()) { //while continua enquanto houver documentos no cursor e no cursor.hasNext() verifica se há mais documentos.
+            const doc = await cursor.next(); //obtém o próximo documento..
+            const content = doc.content || ''; //é definido como o conteúdo do documento ou uma string vazia se doc.content for undefined.
+            const tokens = tokenizer.tokenize(content.toLowerCase()); //converte o conteúdo em tokens (palavras) em minúsculas., podemos melhorar e tambem retirar os acentos
 
-            const filteredTokens = stopword.removeStopwords(tokens)
-                .filter(token => isNaN(token))
-                .map(token => stemmer.stem(token));
+            const filteredTokens = stopword.removeStopwords(tokens) //remove palavras comuns (stopwords) que não são úteis para análise.
+                .filter(token => isNaN(token)) //filtra os tokens, removendo aqueles que são números. Aqui, isNaN(token) retorna true se o token não puder ser convertido para um número, ou seja, se não for um número.
+                .map(token => stemmer.stem(token)); //aplica um algoritmo de stemming para reduzir as palavras às suas raízes.
 
             const wordPositions = {};
             filteredTokens.forEach((token, index) => {
