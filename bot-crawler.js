@@ -6,8 +6,9 @@ const urlModule = require('url');
 const MONGODB_URI = 'mongodb://localhost:27017/botCrawlerIndex';
 const DATABASE_NAME = 'botCrawlerIndex';
 const PORT = 3000;
- const urlsCollection = database.collection('ENGINE_LIST_URL_INDEX');
-const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
+//const database = client.db(DATABASE_NAME);
+//const urlsCollection = database.collection('ENGINE_LIST_URL_INDEX');
+//const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
 const app = express();
 
@@ -61,7 +62,7 @@ async function updateSites() {
         const resultsCollection = database.collection('ENGINE_SEARCH_CRAWLER_DATASET');
 
         const sites = await urlsCollection.find().toArray();
-
+        console.log(sites.url);
         for (const site of sites) {
             const baseDomain = urlModule.parse(site.url).hostname;
             const data = await fetchPageData(site.url, baseDomain);
@@ -130,7 +131,7 @@ async function updateInternalLinksForAllSites(limit = 0) {
             if (site.links && site.links.length > 0) {
                 const baseDomain = urlModule.parse(site.url).hostname;
                 const internalLinksData = await fetchInternalLinks(site.links, baseDomain, limit);
-
+                console.log("link interno " + site.links);
                 for (const internalLink of internalLinksData) {
                     const internalBaseDomain = urlModule.parse(internalLink.url).hostname;
                     const nestedInternalLinksData = await fetchInternalLinks(internalLink.internalLinks, internalBaseDomain, limit);
@@ -198,7 +199,7 @@ async function updateInternalLinksForSpecificSite(siteUrl, limit = 0) {
 app.get('/scan-internal-links', async (req, res) => {
     const { url, limit } = req.query;
     const linkLimit = parseInt(limit, 10) || 0;
-
+    console.log("internal links " + url);
     try {
         if (url) {
             await updateInternalLinksForSpecificSite(url, linkLimit);
